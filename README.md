@@ -25,20 +25,20 @@ APi para APP de cultivo, para analisar e mostrar que tipo de grão pode ser plan
 ---
 
 ### Cadastrar tipo solo
-`POST` /globalSolution/api/tipo_solo
+`POST` /global_solution/api/tipo_solo
 
 | campo | tipo | obrigatório | descrição
 |-------|------|-------------|----------
-| id_tipo_solo | INT | sim | é o id de um tipo de solo previamente cadastrado
-| NM_cor_solo | String | sim | é a cor do solo com no máximo 255 caracteres
-| NM_tipo_solo| String | sim | é o tipo de solo com no máximo 255 caracteres
+| ID_TIPO_SOLO | INT | sim | é o id de um tipo de solo previamente cadastrado
+| NM_COR_SOLO | String | sim | é a cor do solo com no máximo 255 caracteres
+| NM_TIPO_SOLO| String | sim | é o tipo de solo com no máximo 255 caracteres
 
 **Exemplo de corpo do request**
 
 ```js
 {
-    "nm_cor_solo": "marrom"
-    "nm_tipo_solo": "argiloso"
+    "NM_COR_SOLO": "marrom"
+    "NM_TIPO_SOLO": "argiloso"
 }
 ```
 
@@ -52,15 +52,15 @@ APi para APP de cultivo, para analisar e mostrar que tipo de grão pode ser plan
 ---
 
 ### Detalhar tipo solo
-`GET` /globalSolution/api/tipo_solo{id}
+`GET` /global_solution/api/tipo_solo{id}
 
 **Exemplo de corpo de resposta**
 
 ```js
 {
-    "id_tipo_solo": 1,
-    "nm_cor_solo": "beje",
-    "nm_tipo_solo": "arenoso"
+    "ID_TIPO_SOLO": 1,
+    "NM_COR_SOLO": "beje",
+    "NM_TIPO_SOLO": "arenoso"
 }
 ```
 
@@ -74,20 +74,20 @@ APi para APP de cultivo, para analisar e mostrar que tipo de grão pode ser plan
 ---
 
 ### Cadastrar grao
-`POST` /globalSolution/api/grao
+`POST` /global_solution/api/grao
 
 | campo | tipo | obrigatório | descrição
 |-------|------|-------------|----------
-| id_grao | INT | sim | é o id de um grão previamente cadastrado
-| NM_grao | String | sim | é o nome do grão
-| DS_grao| String | sim | é a descrição do grão
+| ID_GRAO | INT | sim | é o id de um grão previamente cadastrado
+| NM_GRAO | String | sim | é o nome do grão
+| DS_GRAO| String | sim | é a descrição do grão
 
 **Exemplo de corpo do request**
 
 ```js
 {
-    "nm_grao": "soja"
-    "ds_grao": "grão de soja"
+    "NM_GRAO": "soja"
+    "DS_GRAO": "grão de soja"
 }
 ```
 
@@ -101,15 +101,15 @@ APi para APP de cultivo, para analisar e mostrar que tipo de grão pode ser plan
 ---
 
 ### Detalhar grao
-`GET` /globalSolution/api/grao{id}
+`GET` /global_solution/api/grao{id}
 
 **Exemplo de corpo de resposta**
 
 ```js
 {
-    "id_grao": 1,
-    "nm_grao": "soja",
-    "ds_grao": "grao de soja"
+    "ID_GRAO": 1,
+    "NM_GRAO": "soja",
+    "DS_GRAO": "grao de soja"
 }
 ```
 
@@ -123,18 +123,18 @@ APi para APP de cultivo, para analisar e mostrar que tipo de grão pode ser plan
 ---
 
 ### Cadastrar tipo clima
-`POST` /globalSolution/api/tipo_clima
+`POST` /global_solution/api/tipo_clima
 
 | campo | tipo | obrigatório | descrição
 |-------|------|-------------|----------
-| id_tipo_clima | INT | sim | é o id de um tipo de clima previamente cadastrado
-| DS_clima | String | sim | é a descrição do clima com no máximo 255 caracteres
+| ID_TIPO_CLIMA | INT | sim | é o id de um tipo de clima previamente cadastrado
+| DS_CLIMA | String | sim | é a descrição do clima com no máximo 255 caracteres
 
 **Exemplo de corpo do request**
 
 ```js
 {
-    "DS_clima": "clima mais seco"
+    "DS_CLIMA": "clima mais seco"
 }
 ```
 
@@ -148,14 +148,14 @@ APi para APP de cultivo, para analisar e mostrar que tipo de grão pode ser plan
 ---
 
 ### Detalhar tipo clima
-`GET` /globalSolution/api/tipo_clima{id}
+`GET` /global_solution/api/tipo_clima{id}
 
 **Exemplo de corpo de resposta**
 
 ```js
 {
-    "id_tipo_clima": 1,
-    "ds_clima": "seco",
+    "ID_TIPO_CLIMA": 1,
+    "DS_CLIMA": "seco",
 }
 ```
 
