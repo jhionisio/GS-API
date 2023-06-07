@@ -22,13 +22,12 @@ public class TipoClimaServiceImpl implements TipoClimaService {
         this.entityManager = entityManager;
     }
 
-    public Iterable<TipoClima> findByLike(String tipoClima) {
-        String jpql = "SELECT d FROM TB_TIPO_CLIMA d WHERE d.tipoClima LIKE :tipoClima";
-        var query = entityManager.createQuery(jpql, TipoClima.class)
-                .setParameter("tipoClima", "%" + tipoClima + "%")
-                .setHint("jakarta.persistence.query.timeout", 60000);
-        var tipoClimaRes = query.getResultList();
-        return tipoClimaRes;
+    public List<TipoClima> findByLikeJPQL(String tipoClima) {
+        System.out.println(tipoClima);
+        String jpql = "SELECT tc FROM TipoClima tc WHERE tc.DS_CLIMA LIKE CONCAT('%', :tipoClima, '%')";
+        TypedQuery<TipoClima> query = entityManager.createQuery(jpql, TipoClima.class)
+                .setParameter("tipoClima", tipoClima);
+        return query.getResultList();
     }
 
     @Override

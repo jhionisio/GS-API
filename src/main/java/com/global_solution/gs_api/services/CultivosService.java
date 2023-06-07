@@ -17,7 +17,7 @@ public interface CultivosService {
 
     void deleteJPQL(Cultivos cultivo);
 
-    Cultivos findByIdJPQL(Long id);
+    CultivosViewDto findByIdJPQL(Long id);
 
     void deleteByIdJPQL(Long id);
 }

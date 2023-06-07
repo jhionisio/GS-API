@@ -71,14 +71,14 @@ public class TipoClimaController {
         return tipoClimaService.findByIdJPQL(id);
     }
 
-    @GetMapping("/JPQL")
+    @GetMapping("/JPQL/{string}")
     @ApiOperation("Retorna os detalhes de um clima")
     @ApiResponses({
             @ApiResponse(code = 200, message = "clima encontrado com sucesso"),
             @ApiResponse(code = 404, message = "clima não encontrado")
     })
-    public Iterable<TipoClima> findAll() {
-        return tipoClimaService.findAllJPQL();
+    public List<TipoClima> findAllByLike(@PathVariable String string) {
+        return tipoClimaService.findByLikeJPQL(string);
     }
 
     @DeleteMapping("{id}")

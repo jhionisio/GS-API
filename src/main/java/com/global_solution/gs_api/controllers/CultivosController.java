@@ -34,6 +34,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.global_solution.gs_api.models.Cultivos;
 import com.global_solution.gs_api.repository.CultivosRepository;
 import com.global_solution.gs_api.services.CultivosService;
+import com.global_solution.gs_api.services.CultivosViewDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class CultivosController {
             @ApiResponse(code = 200, message = "Cultivos encontrado com sucesso"),
             @ApiResponse(code = 404, message = "Cultivos não encontrado")
     })
-    public Cultivos getById(@PathVariable Long id) {
+    public CultivosViewDto getById(@PathVariable Long id) {
         return cultivosService.findByIdJPQL(id);
     }
 

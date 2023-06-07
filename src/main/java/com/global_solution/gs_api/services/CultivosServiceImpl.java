@@ -87,14 +87,26 @@ public class CultivosServiceImpl implements CultivosService {
     }
 
     @Override
-    public Cultivos findByIdJPQL(Long id) {
-        Optional<Cultivos> optionalCultivo = repository.findById(id);
-        if (optionalCultivo.isPresent()) {
-            return optionalCultivo.get();
-        } else {
-            System.out.println("Cultivo not found with ID: " + id);
+    public CultivosViewDto findByIdJPQL(Long id) {
+        Cultivos cultivos = repository.findById(id).orElse(null);
+        if (cultivos == null) {
             return null;
         }
+
+        Grao grao = cultivos.getGrao();
+        TipoClima tipoClima = cultivos.getTipoClima();
+        TipoSolo tipoSolo = cultivos.getTipoSolo();
+
+        CultivosViewDto cultivosView = new CultivosViewDto();
+        cultivosView.setId(cultivos.getID());
+        cultivosView.setGraoId(grao != null ? grao.getID_GRAO() : null);
+        cultivosView.setGraoNome(grao != null ? grao.getNM_GRAO() : null);
+        cultivosView.setTipoClimaId(tipoClima != null ? tipoClima.getID_CLIMA() : null);
+        cultivosView.setTipoClimaDescricao(tipoClima != null ? tipoClima.getDS_CLIMA() : null);
+        cultivosView.setTipoSoloId(tipoSolo != null ? tipoSolo.getID_TIPO_SOLO() : null);
+        cultivosView.setTipoSoloNome(tipoSolo != null ? tipoSolo.getNM_TIPO_SOLO() : null);
+
+        return cultivosView;
     }
 
     @Override

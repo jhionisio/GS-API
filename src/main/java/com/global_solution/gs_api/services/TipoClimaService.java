@@ -10,7 +10,7 @@ import com.global_solution.gs_api.models.TipoClima;
 public interface TipoClimaService {
     void createJPQL(TipoClima tipoClima);
 
-    // Iterable<TipoClima> findByLikeJPQL(String tipoClima);
+    List<TipoClima> findByLikeJPQL(String tipoClima);
 
     List<TipoClima> findAllJPQL();
 

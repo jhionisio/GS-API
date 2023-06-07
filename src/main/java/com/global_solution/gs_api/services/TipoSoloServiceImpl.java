@@ -38,14 +38,12 @@ public class TipoSoloServiceImpl implements TipoSoloService {
 
     }
 
-    @Override
     public List<TipoSolo> findByLikeJPQL(String tipoSolo) {
-        String jpql = "SELECT d FROM TB_TIPO_SOLO d WHERE d.tipo_solo LIKE :solo";
+        System.out.println(tipoSolo);
+        String jpql = "SELECT tc FROM TipoSolo tc WHERE tc.NM_TIPO_SOLO LIKE CONCAT('%', :tipoSolo, '%')";
         TypedQuery<TipoSolo> query = entityManager.createQuery(jpql, TipoSolo.class)
-                .setParameter("solo", "%" + tipoSolo + "%")
-                .setHint("jakarta.persistence.query.timeout", 60000);
-        List<TipoSolo> tipoSolos = query.getResultList();
-        return tipoSolos;
+                .setParameter("tipoSolo", tipoSolo);
+        return query.getResultList();
     }
 
     @Override
