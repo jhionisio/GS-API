@@ -1,13 +1,11 @@
 package com.global_solution.gs_api.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.global_solution.gs_api.models.Cultivos;
+
 import jakarta.persistence.EntityManager;
 
-public class CultivosRepository {
-
-    private EntityManager entityManager;
-
-    public CultivosRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+public interface CultivosRepository extends JpaRepository<Cultivos, Long> {
 
 }

@@ -24,14 +24,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "TB_GRAO")
 public class Grao {
 
+    public Grao(String NM_GRAO, String DS_GRAO) {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Long ID_GRAO;
-    @NotBlank
+    @NotNull
     @Size(max = 255)
     private String NM_GRAO;
-    @NotBlank
+    @NotNull
     @Size(max = 255)
     private String DS_GRAO;
     @OneToMany(mappedBy = "grao")

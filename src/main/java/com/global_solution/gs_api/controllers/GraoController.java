@@ -32,6 +32,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.global_solution.gs_api.models.Grao;
 import com.global_solution.gs_api.repository.GraoRepository;
+import com.global_solution.gs_api.services.GraoDto;
 import com.global_solution.gs_api.services.GraoService;
 
 import java.util.ArrayList;
@@ -71,6 +72,11 @@ public class GraoController {
         return graoService.findByIdJPQL(id);
     }
 
+    @GetMapping("/graos")
+    public List<GraoDto> getAll() {
+        return graoService.findAllJPQL();
+    }
+
     @DeleteMapping("{id}")
     @ApiOperation("Exclui um grão")
     @ApiResponses({
@@ -88,8 +94,8 @@ public class GraoController {
             @ApiResponse(code = 400, message = "Erro na validação dos dados da requisição"),
             @ApiResponse(code = 404, message = "Grão não encontrado")
     })
-    public void update(@RequestBody Grao grao) {
-        graoService.updateJPQL(grao);
+    public void update(@PathVariable Long id, @RequestBody Grao grao) {
+        graoService.updateJPQL(id, grao);
     }
 
 }

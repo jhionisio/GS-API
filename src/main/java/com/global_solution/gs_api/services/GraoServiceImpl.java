@@ -1,17 +1,16 @@
 package com.global_solution.gs_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.global_solution.gs_api.models.Grao;
 import com.global_solution.gs_api.repository.GraoRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 @Service
 public class GraoServiceImpl implements GraoService {
@@ -25,25 +24,14 @@ public class GraoServiceImpl implements GraoService {
         this.entityManager = entityManager;
     }
 
+    @Transactional
     @Override
     public void createJPQL(Grao gra) {
-
         try {
-
-            entityManager.getTransaction().begin();
-
             entityManager.persist(gra);
-
-            entityManager.getTransaction().commit();
-
         } catch (Exception e) {
-
-            entityManager.getTransaction().rollback();
-
             throw e;
-
         }
-
     }
 
     @Override
@@ -57,27 +45,28 @@ public class GraoServiceImpl implements GraoService {
     }
 
     @Override
-    public void updateJPQL(Grao gra) {
+    public void updateJPQL(Long id, Grao gra) {
         try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(gra);
-            entityManager.getTransaction().commit();
+            repository.findById(id);
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
             throw e;
         }
+        gra.setID_GRAO(id);
+        repository.save(gra);
     }
 
     @Override
-    public void deleteJPQL(Grao gra) {
-        entityManager.getTransaction().begin();
-        try {
-            entityManager.remove(gra);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
+    public List<GraoDto> findAllJPQL() {
+        List<Grao> graos = repository.findAll();
+        List<GraoDto> graosDto = new ArrayList<>();
+
+        for (Grao grao : graos) {
+            String nm_GRAO = grao.getNM_GRAO();
+            GraoDto graoDto = new GraoDto(nm_GRAO);
+            graosDto.add(graoDto);
         }
+
+        return graosDto;
     }
 
     @Override
@@ -91,17 +80,7 @@ public class GraoServiceImpl implements GraoService {
 
     @Override
     public void deleteByIdJPQL(Long id) {
-        entityManager.getTransaction().begin();
-        try {
-            Grao gra = entityManager.find(Grao.class, id);
-            if (gra != null) {
-                entityManager.remove(gra);
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
-        }
+        repository.deleteById(id);
     }
 
 }

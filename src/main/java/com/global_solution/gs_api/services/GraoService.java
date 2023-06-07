@@ -12,9 +12,9 @@ public interface GraoService {
 
     List<Grao> findByLikeJPQL(String grao);
 
-    void updateJPQL(Grao gra);
+    List<GraoDto> findAllJPQL();
 
-    void deleteJPQL(Grao gra);
+    void updateJPQL(Long id, Grao gra);
 
     Grao findByIdJPQL(Long id);
 
