@@ -59,7 +59,7 @@ public class CultivosController {
             @ApiResponse(code = 400, message = "Erro na validação dos dados da requisição")
     })
     public void create(@RequestBody Cultivos cultivos) {
-        CultivosService.createJPQL(cultivos);
+        cultivosService.createJPQL(cultivos);
     }
 
     @GetMapping("{id}")
@@ -69,7 +69,7 @@ public class CultivosController {
             @ApiResponse(code = 404, message = "Cultivos não encontrado")
     })
     public Cultivos getById(@PathVariable Long id) {
-        return CultivosService.findByIdJPQL(id);
+        return cultivosService.findByIdJPQL(id);
     }
 
     @DeleteMapping("{id}")
@@ -79,7 +79,7 @@ public class CultivosController {
             @ApiResponse(code = 404, message = "Cultivo não encontrado")
     })
     public void destroy(@PathVariable Long id) {
-        CultivosService.deleteByIdJPQL(id);
+        cultivosService.deleteByIdJPQL(id);
     }
 
     @PutMapping("{id}")
