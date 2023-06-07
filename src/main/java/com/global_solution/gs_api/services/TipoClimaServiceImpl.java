@@ -22,6 +22,15 @@ public class TipoClimaServiceImpl implements TipoClimaService {
         this.entityManager = entityManager;
     }
 
+    public Iterable<TipoClima> findByLike(String tipoClima) {
+        String jpql = "SELECT d FROM TB_TIPO_CLIMA d WHERE d.tipoClima LIKE :tipoClima";
+        var query = entityManager.createQuery(jpql, TipoClima.class)
+                .setParameter("tipoClima", "%" + tipoClima + "%")
+                .setHint("jakarta.persistence.query.timeout", 60000);
+        var tipoClimaRes = query.getResultList();
+        return tipoClimaRes;
+    }
+
     @Override
     public void createJPQL(TipoClima tipoClima) {
 

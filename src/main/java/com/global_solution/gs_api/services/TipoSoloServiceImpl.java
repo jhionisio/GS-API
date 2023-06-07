@@ -22,6 +22,15 @@ public class TipoSoloServiceImpl implements TipoSoloService {
         this.entityManager = entityManager;
     }
 
+    public Iterable<TipoSolo> findByLike(String tipoSolo) {
+        String jpql = "SELECT d FROM TB_TIPO_SOLO d WHERE d.tipoSolo LIKE :tipoSolo";
+        var query = entityManager.createQuery(jpql, TipoSolo.class)
+                .setParameter("tipoSolo", "%" + tipoSolo + "%")
+                .setHint("jakarta.persistence.query.timeout", 60000);
+        var tipoSoloRes = query.getResultList();
+        return tipoSoloRes;
+    }
+
     @Override
     public void createJPQL(TipoSolo tipoSolo) {
 
