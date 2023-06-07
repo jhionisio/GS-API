@@ -16,6 +16,8 @@ public interface TipoSoloService {
 
     void deleteJPQL(TipoSolo tipoSolo);
 
+    List<TipoSoloDto> findAllJPQL();
+
     TipoSolo findByIdJPQL(Long id);
 
     void deleteByIdJPQL(Long id);

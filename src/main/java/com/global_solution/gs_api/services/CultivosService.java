@@ -11,7 +11,11 @@ import com.global_solution.gs_api.models.Cultivos;
 public interface CultivosService {
     Cultivos createJPQL(Cultivos cultivo);
 
+    List<CultivosViewDto> findByDsClimaAndNmTipoSolo(Integer clima, Integer solo);
+
     List<Cultivos> findByLikeJPQL(Integer graoId);
+
+    List<CultivosViewDto> findAllJPQL();
 
     void updateJPQL(Cultivos cultivo);
 

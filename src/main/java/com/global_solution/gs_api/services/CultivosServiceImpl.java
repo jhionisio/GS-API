@@ -1,5 +1,6 @@
 package com.global_solution.gs_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,34 @@ public class CultivosServiceImpl implements CultivosService {
 
     public CultivosServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
+    }
+
+    @Override
+    public List<CultivosViewDto> findByDsClimaAndNmTipoSolo(Integer dsClima, Integer nmTipoSolo) {
+        List<Cultivos> cultivosList = repository.findAll();
+        List<CultivosViewDto> cultivosViewList = new ArrayList<>();
+
+        for (Cultivos cultivos : cultivosList) {
+            Grao grao = cultivos.getGrao();
+            TipoClima tipoClima = cultivos.getTipoClima();
+            TipoSolo tipoSolo = cultivos.getTipoSolo();
+
+            if (dsClima != null && nmTipoSolo != null && tipoClima.getID_CLIMA().equals(dsClima)
+                    && tipoSolo.getID_TIPO_SOLO().equals(nmTipoSolo)) {
+                CultivosViewDto cultivosView = new CultivosViewDto();
+                cultivosView.setId(cultivos.getID());
+                cultivosView.setGraoId(grao != null ? grao.getID_GRAO() : null);
+                cultivosView.setGraoNome(grao != null ? grao.getNM_GRAO() : null);
+                cultivosView.setTipoClimaId(tipoClima.getID_CLIMA() != null ? tipoClima.getID_CLIMA() : null);
+                cultivosView.setTipoClimaDescricao(tipoClima != null ? tipoClima.getDS_CLIMA() : null);
+                cultivosView.setTipoSoloId(tipoSolo.getID_TIPO_SOLO() != null ? tipoSolo.getID_TIPO_SOLO() : null);
+                cultivosView.setTipoSoloNome(tipoSolo != null ? tipoSolo.getNM_TIPO_SOLO() : null);
+
+                cultivosViewList.add(cultivosView);
+            }
+        }
+
+        return cultivosViewList;
     }
 
     @Override
@@ -112,6 +141,31 @@ public class CultivosServiceImpl implements CultivosService {
     @Override
     public void deleteByIdJPQL(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<CultivosViewDto> findAllJPQL() {
+        List<Cultivos> cultivosList = repository.findAll();
+        List<CultivosViewDto> cultivosViewList = new ArrayList<>();
+
+        for (Cultivos cultivos : cultivosList) {
+            Grao grao = cultivos.getGrao();
+            TipoClima tipoClima = cultivos.getTipoClima();
+            TipoSolo tipoSolo = cultivos.getTipoSolo();
+
+            CultivosViewDto cultivosView = new CultivosViewDto();
+            cultivosView.setId(cultivos.getID());
+            cultivosView.setGraoId(grao != null ? grao.getID_GRAO() : null);
+            cultivosView.setGraoNome(grao != null ? grao.getNM_GRAO() : null);
+            cultivosView.setTipoClimaId(tipoClima != null ? tipoClima.getID_CLIMA() : null);
+            cultivosView.setTipoClimaDescricao(tipoClima != null ? tipoClima.getDS_CLIMA() : null);
+            cultivosView.setTipoSoloId(tipoSolo != null ? tipoSolo.getID_TIPO_SOLO() : null);
+            cultivosView.setTipoSoloNome(tipoSolo != null ? tipoSolo.getNM_TIPO_SOLO() : null);
+
+            cultivosViewList.add(cultivosView);
+        }
+
+        return cultivosViewList;
     }
 
 }

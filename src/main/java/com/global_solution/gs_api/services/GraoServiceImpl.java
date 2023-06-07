@@ -1,5 +1,6 @@
 package com.global_solution.gs_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,20 @@ public class GraoServiceImpl implements GraoService {
         }
         gra.setID_GRAO(id);
         repository.save(gra);
+    }
+
+    @Override
+    public List<GraoDto> findAllJPQL() {
+        List<Grao> graos = repository.findAll();
+        List<GraoDto> graosDto = new ArrayList<>();
+
+        for (Grao grao : graos) {
+            String nm_GRAO = grao.getNM_GRAO();
+            GraoDto graoDto = new GraoDto(nm_GRAO);
+            graosDto.add(graoDto);
+        }
+
+        return graosDto;
     }
 
     @Override

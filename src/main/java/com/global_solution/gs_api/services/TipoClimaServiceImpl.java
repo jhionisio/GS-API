@@ -1,5 +1,6 @@
 package com.global_solution.gs_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,17 @@ public class TipoClimaServiceImpl implements TipoClimaService {
     }
 
     @Override
-    public List<TipoClima> findAllJPQL() {
-        TypedQuery<TipoClima> query = entityManager.createQuery("SELECT tc FROM TipoClima tc", TipoClima.class);
-        return query.getResultList();
+    public List<TipoClimaDto> findAllJPQL() {
+        List<TipoClima> tipoClimas = repository.findAll();
+        List<TipoClimaDto> tiposClimaDto = new ArrayList<>();
+
+        for (TipoClima tipoSolo : tipoClimas) {
+            String ds_CLIMA = tipoSolo.getDS_CLIMA();
+            TipoClimaDto tipoClimaDto = new TipoClimaDto(ds_CLIMA);
+            tiposClimaDto.add(tipoClimaDto);
+        }
+
+        return tiposClimaDto;
     }
 
     @Override

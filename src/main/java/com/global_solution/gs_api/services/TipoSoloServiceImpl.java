@@ -1,5 +1,6 @@
 package com.global_solution.gs_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,20 @@ public class TipoSoloServiceImpl implements TipoSoloService {
         TypedQuery<TipoSolo> query = entityManager.createQuery(jpql, TipoSolo.class)
                 .setParameter("tipoSolo", tipoSolo);
         return query.getResultList();
+    }
+
+    @Override
+    public List<TipoSoloDto> findAllJPQL() {
+        List<TipoSolo> tiposSolo = repository.findAll();
+        List<TipoSoloDto> tiposSoloDto = new ArrayList<>();
+
+        for (TipoSolo tipoSolo : tiposSolo) {
+            String nm_TIPO_SOLO = tipoSolo.getNM_TIPO_SOLO();
+            TipoSoloDto tipoSoloDto = new TipoSoloDto(nm_TIPO_SOLO);
+            tiposSoloDto.add(tipoSoloDto);
+        }
+
+        return tiposSoloDto;
     }
 
     @Override

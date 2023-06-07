@@ -12,6 +12,8 @@ public interface GraoService {
 
     List<Grao> findByLikeJPQL(String grao);
 
+    List<GraoDto> findAllJPQL();
+
     void updateJPQL(Long id, Grao gra);
 
     Grao findByIdJPQL(Long id);

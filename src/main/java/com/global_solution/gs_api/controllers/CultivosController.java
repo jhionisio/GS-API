@@ -33,6 +33,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.global_solution.gs_api.models.Cultivos;
 import com.global_solution.gs_api.repository.CultivosRepository;
+import com.global_solution.gs_api.services.CultivosDTO;
 import com.global_solution.gs_api.services.CultivosService;
 import com.global_solution.gs_api.services.CultivosViewDto;
 
@@ -73,6 +74,21 @@ public class CultivosController {
         return cultivosService.findByIdJPQL(id);
     }
 
+    @GetMapping("/cultivos")
+    public List<CultivosViewDto> getAll() {
+        return cultivosService.findAllJPQL();
+    }
+
+    @GetMapping("/findByClimaAndTipoSolo/{dsClima}/{nmTipoSolo}")
+    public List<CultivosViewDto> findByClimaAndTipoSolo(@PathVariable Integer dsClima,
+            @PathVariable Integer nmTipoSolo) {
+        try {
+            return cultivosService.findByDsClimaAndNmTipoSolo(dsClima, nmTipoSolo);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error retrieving cultivos", e);
+        }
+    }
+
     @DeleteMapping("{id}")
     @ApiOperation("Exclui um cultivo")
     @ApiResponses({
@@ -81,6 +97,12 @@ public class CultivosController {
     })
     public void destroy(@PathVariable Long id) {
         cultivosService.deleteByIdJPQL(id);
+    }
+
+    @GetMapping
+    public List<CultivosViewDto> findByDsClimaAndNmTipoSolo(@RequestParam("dsClima") Integer dsClima,
+            @RequestParam("nmTipoSolo") Integer nmTipoSolo) {
+        return cultivosService.findByDsClimaAndNmTipoSolo(dsClima, nmTipoSolo);
     }
 
     @PutMapping("{id}")

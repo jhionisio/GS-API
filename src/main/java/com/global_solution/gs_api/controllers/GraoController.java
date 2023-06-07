@@ -32,6 +32,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.global_solution.gs_api.models.Grao;
 import com.global_solution.gs_api.repository.GraoRepository;
+import com.global_solution.gs_api.services.GraoDto;
 import com.global_solution.gs_api.services.GraoService;
 
 import java.util.ArrayList;
@@ -69,6 +70,11 @@ public class GraoController {
     })
     public Grao getById(@PathVariable Long id) {
         return graoService.findByIdJPQL(id);
+    }
+
+    @GetMapping("/graos")
+    public List<GraoDto> getAll() {
+        return graoService.findAllJPQL();
     }
 
     @DeleteMapping("{id}")

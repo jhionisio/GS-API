@@ -12,7 +12,7 @@ public interface TipoClimaService {
 
     List<TipoClima> findByLikeJPQL(String tipoClima);
 
-    List<TipoClima> findAllJPQL();
+    List<TipoClimaDto> findAllJPQL();
 
     void updateJPQL(Long id, TipoClima tipoClima);
 

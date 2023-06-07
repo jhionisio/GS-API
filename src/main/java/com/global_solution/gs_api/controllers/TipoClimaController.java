@@ -32,6 +32,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.global_solution.gs_api.models.TipoClima;
 import com.global_solution.gs_api.repository.TipoClimaRepository;
+import com.global_solution.gs_api.services.TipoClimaDto;
 import com.global_solution.gs_api.services.TipoClimaService;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class TipoClimaController {
     })
     public List<TipoClima> findAllByLike(@PathVariable String string) {
         return tipoClimaService.findByLikeJPQL(string);
+    }
+
+    @GetMapping("/tipo-clima")
+    public List<TipoClimaDto> getAllTipoClima() {
+        return tipoClimaService.findAllJPQL();
     }
 
     @DeleteMapping("{id}")

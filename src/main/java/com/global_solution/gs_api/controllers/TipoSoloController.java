@@ -32,6 +32,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.global_solution.gs_api.models.TipoSolo;
 import com.global_solution.gs_api.repository.TipoSoloRepository;
+import com.global_solution.gs_api.services.TipoSoloDto;
 import com.global_solution.gs_api.services.TipoSoloService;
 
 import java.util.ArrayList;
@@ -69,6 +70,11 @@ public class TipoSoloController {
     })
     public TipoSolo getById(@PathVariable Long id) {
         return tipoSoloService.findByIdJPQL(id);
+    }
+
+    @GetMapping("/tipo-solo")
+    public List<TipoSoloDto> getAllTipoSolo() {
+        return tipoSoloService.findAllJPQL();
     }
 
     @GetMapping("/JPQL/{string}")
