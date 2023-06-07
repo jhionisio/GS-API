@@ -1,10 +1,10 @@
-package com.global_solution.GSAPI;
+package com.global_solution.gs_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GsApiApplicationTests {
+class gs_apiApplicationTests {
 
 	@Test
 	void contextLoads() {
