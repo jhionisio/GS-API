@@ -4,32 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.global_solution.gs_api.models.Cultivos;
-import com.global_solution.gs_api.repository.CultivosRepository;
+import com.global_solution.gs_api.models.TipoSolo;
+import com.global_solution.gs_api.repository.TipoSoloRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
 @Service
-public class CultivosServiceImpl implements CultivosService {
+public class TipoSoloServiceImpl implements TipoSoloService {
 
     @Autowired // IoD IoC
-    CultivosRepository repository;
+    TipoSoloRepository repository;
 
     private EntityManager entityManager;
 
-    public CultivosServiceImpl(EntityManager entityManager) {
+    public TipoSoloServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public void createJPQL(Cultivos cultivo) {
+    public void createJPQL(TipoSolo tipoSolo) {
 
         try {
 
             entityManager.getTransaction().begin();
 
-            entityManager.persist(cultivo);
+            entityManager.persist(tipoSolo);
 
             entityManager.getTransaction().commit();
 
@@ -44,20 +44,20 @@ public class CultivosServiceImpl implements CultivosService {
     }
 
     @Override
-    public List<Cultivos> findByLikeJPQL(String cultivos) {
-        String jpql = "SELECT d FROM TB_CULTIVOS d WHERE d.grao LIKE :cultivo";
-        TypedQuery<Cultivos> query = entityManager.createQuery(jpql, Cultivos.class)
-                .setParameter("cultivo", "%" + cultivos + "%")
+    public List<TipoSolo> findByLikeJPQL(String tipoSolo) {
+        String jpql = "SELECT d FROM TB_TIPO_SOLO d WHERE d.tipo_solo LIKE :solo";
+        TypedQuery<TipoSolo> query = entityManager.createQuery(jpql, TipoSolo.class)
+                .setParameter("solo", "%" + tipoSolo + "%")
                 .setHint("jakarta.persistence.query.timeout", 60000);
-        List<Cultivos> cultivo = query.getResultList();
-        return cultivo;
+        List<TipoSolo> tipoSolos = query.getResultList();
+        return tipoSolos;
     }
 
     @Override
-    public void updateJPQL(Cultivos cultivo) {
+    public void updateJPQL(TipoSolo tipoSolo) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(cultivo);
+            entityManager.merge(tipoSolo);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -66,10 +66,10 @@ public class CultivosServiceImpl implements CultivosService {
     }
 
     @Override
-    public void deleteJPQL(Cultivos cultivo) {
+    public void deleteJPQL(TipoSolo tipoSolo) {
         entityManager.getTransaction().begin();
         try {
-            entityManager.remove(cultivo);
+            entityManager.remove(tipoSolo);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             entityManager.getTransaction().rollback();
@@ -78,21 +78,21 @@ public class CultivosServiceImpl implements CultivosService {
     }
 
     @Override
-    public Cultivos findByIdJPQL(Long id) {
-        Cultivos cultivo = entityManager.find(Cultivos.class, id);
-        if (cultivo == null) {
+    public TipoSolo findByIdJPQL(Long id) {
+        TipoSolo tipoSolo = entityManager.find(TipoSolo.class, id);
+        if (tipoSolo == null) {
             return null;
         }
-        return cultivo;
+        return tipoSolo;
     }
 
     @Override
     public void deleteByIdJPQL(Long id) {
         entityManager.getTransaction().begin();
         try {
-            Cultivos cultivo = entityManager.find(Cultivos.class, id);
-            if (cultivo != null) {
-                entityManager.remove(cultivo);
+            TipoSolo tipoSolo = entityManager.find(TipoSolo.class, id);
+            if (tipoSolo != null) {
+                entityManager.remove(tipoSolo);
             }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -100,4 +100,5 @@ public class CultivosServiceImpl implements CultivosService {
             throw e;
         }
     }
+
 }
