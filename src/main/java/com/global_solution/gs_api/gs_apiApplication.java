@@ -18,6 +18,7 @@ import com.global_solution.gs_api.services.GraoServiceImpl;
 public class gs_apiApplication {
 
 	public static void main(String[] args) {
+		SpringApplication.run(gs_apiApplication.class, args);
 		try {
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("TESTEGS-PU");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
