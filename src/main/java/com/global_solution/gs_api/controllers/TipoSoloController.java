@@ -98,8 +98,8 @@ public class TipoSoloController {
             @ApiResponse(code = 400, message = "Erro na validação dos dados da requisição"),
             @ApiResponse(code = 404, message = "Solo não encontrado")
     })
-    public void update(@RequestBody TipoSolo tipoSolo) {
-        tipoSoloService.updateJPQL(tipoSolo);
+    public void update(@PathVariable Long id, @RequestBody TipoSolo tipoSolo) {
+        tipoSoloService.updateJPQL(id, tipoSolo);
     }
 
 }

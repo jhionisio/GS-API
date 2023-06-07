@@ -33,45 +33,24 @@ public class TipoClimaServiceImpl implements TipoClimaService {
 
     @Override
     public void createJPQL(TipoClima tipoClima) {
-
-        try {
-
-            entityManager.getTransaction().begin();
-
-            entityManager.persist(tipoClima);
-
-            entityManager.getTransaction().commit();
-
-        } catch (Exception e) {
-
-            entityManager.getTransaction().rollback();
-
-            throw e;
-
-        }
-
+        repository.save(tipoClima);
     }
 
     @Override
-    public List<TipoClima> findByLikeJPQL(String tipoClima) {
-        String jpql = "SELECT d FROM TB_TIPO_CLIMA d WHERE d.tipo_clima LIKE :clima";
-        TypedQuery<TipoClima> query = entityManager.createQuery(jpql, TipoClima.class)
-                .setParameter("clima", "%" + tipoClima + "%")
-                .setHint("jakarta.persistence.query.timeout", 60000);
-        List<TipoClima> tipoClimas = query.getResultList();
-        return tipoClimas;
+    public List<TipoClima> findAllJPQL() {
+        TypedQuery<TipoClima> query = entityManager.createQuery("SELECT tc FROM TipoClima tc", TipoClima.class);
+        return query.getResultList();
     }
 
     @Override
-    public void updateJPQL(TipoClima tipoClima) {
+    public void updateJPQL(Long id, TipoClima tipoClima) {
         try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(tipoClima);
-            entityManager.getTransaction().commit();
+            repository.findById(id);
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
             throw e;
         }
+        tipoClima.setID_CLIMA(id);
+        repository.save(tipoClima);
     }
 
     @Override
@@ -97,17 +76,7 @@ public class TipoClimaServiceImpl implements TipoClimaService {
 
     @Override
     public void deleteByIdJPQL(Long id) {
-        entityManager.getTransaction().begin();
-        try {
-            TipoClima tipoClima = entityManager.find(TipoClima.class, id);
-            if (tipoClima != null) {
-                entityManager.remove(tipoClima);
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
-        }
+        repository.deleteById(id);
     }
 
 }

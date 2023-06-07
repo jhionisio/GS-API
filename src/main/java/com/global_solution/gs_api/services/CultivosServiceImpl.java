@@ -1,11 +1,19 @@
 package com.global_solution.gs_api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import com.global_solution.gs_api.models.Cultivos;
+import com.global_solution.gs_api.models.Grao;
+import com.global_solution.gs_api.models.TipoClima;
+import com.global_solution.gs_api.models.TipoSolo;
 import com.global_solution.gs_api.repository.CultivosRepository;
+import com.global_solution.gs_api.repository.GraoRepository;
+import com.global_solution.gs_api.repository.TipoClimaRepository;
+import com.global_solution.gs_api.repository.TipoSoloRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -16,6 +24,15 @@ public class CultivosServiceImpl implements CultivosService {
     @Autowired // IoD IoC
     CultivosRepository repository;
 
+    @Autowired // IoD IoC
+    TipoClimaRepository tipoClimaRepository;
+
+    @Autowired // IoD IoC
+    TipoSoloRepository tipoSoloRepository;
+
+    @Autowired // IoD IoC
+    GraoRepository graoRepository;
+
     private EntityManager entityManager;
 
     public CultivosServiceImpl(EntityManager entityManager) {
@@ -23,31 +40,23 @@ public class CultivosServiceImpl implements CultivosService {
     }
 
     @Override
-    public void createJPQL(Cultivos cultivo) {
+    public Cultivos createJPQL(Cultivos cultivos) {
+        Grao grao = cultivos.getGrao();
+        TipoClima tipoClima = cultivos.getTipoClima();
+        TipoSolo tipoSolo = cultivos.getTipoSolo();
 
-        try {
+        graoRepository.save(grao);
+        tipoClimaRepository.save(tipoClima);
+        tipoSoloRepository.save(tipoSolo);
 
-            entityManager.getTransaction().begin();
-
-            entityManager.persist(cultivo);
-
-            entityManager.getTransaction().commit();
-
-        } catch (Exception e) {
-
-            entityManager.getTransaction().rollback();
-
-            throw e;
-
-        }
-
+        return repository.save(cultivos);
     }
 
     @Override
-    public List<Cultivos> findByLikeJPQL(String cultivos) {
+    public List<Cultivos> findByLikeJPQL(Integer graoId) {
         String jpql = "SELECT d FROM TB_CULTIVOS d WHERE d.grao LIKE :cultivo";
         TypedQuery<Cultivos> query = entityManager.createQuery(jpql, Cultivos.class)
-                .setParameter("cultivo", "%" + cultivos + "%")
+                .setParameter("cultivo", "%" + graoId + "%")
                 .setHint("jakarta.persistence.query.timeout", 60000);
         List<Cultivos> cultivo = query.getResultList();
         return cultivo;
@@ -79,25 +88,18 @@ public class CultivosServiceImpl implements CultivosService {
 
     @Override
     public Cultivos findByIdJPQL(Long id) {
-        Cultivos cultivo = entityManager.find(Cultivos.class, id);
-        if (cultivo == null) {
+        Optional<Cultivos> optionalCultivo = repository.findById(id);
+        if (optionalCultivo.isPresent()) {
+            return optionalCultivo.get();
+        } else {
+            System.out.println("Cultivo not found with ID: " + id);
             return null;
         }
-        return cultivo;
     }
 
     @Override
     public void deleteByIdJPQL(Long id) {
-        entityManager.getTransaction().begin();
-        try {
-            Cultivos cultivo = entityManager.find(Cultivos.class, id);
-            if (cultivo != null) {
-                entityManager.remove(cultivo);
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
-        }
+        repository.deleteById(id);
     }
+
 }

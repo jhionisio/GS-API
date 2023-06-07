@@ -34,21 +34,7 @@ public class TipoSoloServiceImpl implements TipoSoloService {
     @Override
     public void createJPQL(TipoSolo tipoSolo) {
 
-        try {
-
-            entityManager.getTransaction().begin();
-
-            entityManager.persist(tipoSolo);
-
-            entityManager.getTransaction().commit();
-
-        } catch (Exception e) {
-
-            entityManager.getTransaction().rollback();
-
-            throw e;
-
-        }
+        repository.save(tipoSolo);
 
     }
 
@@ -63,15 +49,14 @@ public class TipoSoloServiceImpl implements TipoSoloService {
     }
 
     @Override
-    public void updateJPQL(TipoSolo tipoSolo) {
+    public void updateJPQL(Long id, TipoSolo tipoSolo) {
         try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(tipoSolo);
-            entityManager.getTransaction().commit();
+            repository.findById(id);
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
             throw e;
         }
+        tipoSolo.setID_TIPO_SOLO(id);
+        repository.save(tipoSolo);
     }
 
     @Override
@@ -97,17 +82,7 @@ public class TipoSoloServiceImpl implements TipoSoloService {
 
     @Override
     public void deleteByIdJPQL(Long id) {
-        entityManager.getTransaction().begin();
-        try {
-            TipoSolo tipoSolo = entityManager.find(TipoSolo.class, id);
-            if (tipoSolo != null) {
-                entityManager.remove(tipoSolo);
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            throw e;
-        }
+        repository.deleteById(id);
     }
 
 }

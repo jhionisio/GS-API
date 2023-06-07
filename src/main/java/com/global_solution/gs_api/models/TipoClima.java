@@ -26,7 +26,6 @@ public class TipoClima {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Long ID_CLIMA;
 
     @NotBlank

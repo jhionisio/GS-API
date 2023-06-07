@@ -1,6 +1,7 @@
 package com.global_solution.gs_api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -8,9 +9,9 @@ import com.global_solution.gs_api.models.Cultivos;
 
 @Service
 public interface CultivosService {
-    void createJPQL(Cultivos cultivo);
+    Cultivos createJPQL(Cultivos cultivo);
 
-    List<Cultivos> findByLikeJPQL(String cultivos);
+    List<Cultivos> findByLikeJPQL(Integer graoId);
 
     void updateJPQL(Cultivos cultivo);
 

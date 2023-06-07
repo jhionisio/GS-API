@@ -71,14 +71,14 @@ public class TipoClimaController {
         return tipoClimaService.findByIdJPQL(id);
     }
 
-    @GetMapping("/JPQL/{string}")
+    @GetMapping("/JPQL")
     @ApiOperation("Retorna os detalhes de um clima")
     @ApiResponses({
             @ApiResponse(code = 200, message = "clima encontrado com sucesso"),
             @ApiResponse(code = 404, message = "clima não encontrado")
     })
-    public List<TipoClima> getByLike(@PathVariable String string) {
-        return tipoClimaService.findByLikeJPQL(string);
+    public Iterable<TipoClima> findAll() {
+        return tipoClimaService.findAllJPQL();
     }
 
     @DeleteMapping("{id}")
@@ -98,8 +98,8 @@ public class TipoClimaController {
             @ApiResponse(code = 400, message = "Erro na validação dos dados da requisição"),
             @ApiResponse(code = 404, message = "Clima não encontrado")
     })
-    public void update(@RequestBody TipoClima tipoClima) {
-        tipoClimaService.updateJPQL(tipoClima);
+    public void update(@PathVariable Long id, @RequestBody TipoClima tipoClima) {
+        tipoClimaService.updateJPQL(id, tipoClima);
     }
 
 }

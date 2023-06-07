@@ -1,11 +1,14 @@
 package com.global_solution.gs_api.models;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,17 +28,14 @@ public class Cultivos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "ID_GRAO")
     private Grao grao;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_CLIMA")
     private TipoClima tipoClima;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "ID_TIPO_SOLO")
     private TipoSolo tipoSolo;

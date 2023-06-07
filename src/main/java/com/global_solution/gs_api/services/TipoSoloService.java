@@ -12,7 +12,7 @@ public interface TipoSoloService {
 
     List<TipoSolo> findByLikeJPQL(String tipoSolo);
 
-    void updateJPQL(TipoSolo tipoSolo);
+    void updateJPQL(Long id, TipoSolo tipoSolo);
 
     void deleteJPQL(TipoSolo tipoSolo);
 
