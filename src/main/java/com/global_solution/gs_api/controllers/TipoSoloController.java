@@ -71,6 +71,16 @@ public class TipoSoloController {
         return tipoSoloService.findByIdJPQL(id);
     }
 
+    @GetMapping("/JPQL/{string}")
+    @ApiOperation("Retorna os detalhes dos solos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Solo encontrado com sucesso"),
+            @ApiResponse(code = 404, message = "Solo não encontrado")
+    })
+    public List<TipoSolo> getByLike(@PathVariable String string) {
+        return tipoSoloService.findByLikeJPQL(string);
+    }
+
     @DeleteMapping("{id}")
     @ApiOperation("Exclui um solo")
     @ApiResponses({
